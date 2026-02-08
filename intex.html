@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>分期貸款試算</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      padding: 20px;
+    }
+    .box {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin: auto;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    .result {
+      margin-top: 15px;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>分期貸款試算</h2>
+
+  <label>貸款金額</label>
+  <input type="number" id="amount" placeholder="請輸入金額">
+
+  <label>期數</label>
+  <select id="months">
+    <option value="3">3 期</option>
+    <option value="6">6 期</option>
+    <option value="9">9 期</option>
+    <option value="12">12 期</option>
+    <option value="15">15 期</option>
+    <option value="18">18 期</option>
+    <option value="21">21 期</option>
+    <option value="24">24 期</option>
+  </select>
+
+  <button onclick="calculate()">開始試算</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const rateTable = {
+    3: 0.04,
+    6: 0.055,
+    9: 0.08,
+    12: 0.10,
+    15: 0.12,
+    18: 0.14,
+    21: 0.15,
+    24: 0.16
+  };
+
+  function calculate() {
+    const amount = Number(document.getElementById("amount").value);
+    const months = Number(document.getElementById("months").value);
+    const rate = rateTable[months];
+
+    if (!amount) {
+      alert("請輸入金額");
+      return;
+    }
+
+    const interest = amount * rate;
+    const total = amount + interest;
+    const perMonth = total / months;
+
+    document.getElementById("result").innerHTML = `
+      利率：${rate * 100}%<br>
+      總利息：${interest.toFixed(0)} 元<br>
+      總還款：${total.toFixed(0)} 元<br>
+      每期約：${perMonth.toFixed(0)} 元
+    `;
+  }
+</script>
+
+</body>
+</html>
